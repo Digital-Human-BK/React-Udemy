@@ -19,8 +19,8 @@ class UserFinder extends Component {
     };
   }
 
-  componentDidMount(){
-    this.setState({filteredUsers: DUMMY_USERS})
+  componentDidMount() {
+    this.setState({ filteredUsers: DUMMY_USERS });
   }
 
   componentDidUpdate(prevProps, prevState) {
