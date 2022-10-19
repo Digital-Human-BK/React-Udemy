@@ -1,6 +1,29 @@
 import { createStore } from 'redux';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = { counter: 0, showCounter: true };
+
+createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    increment(state, action) {
+      state.counter++;
+    },
+    decrement(state) {
+      state.counter++;
+    },
+    increase(state, action) {
+      state.counter += action.value;
+    },
+    decrease(state, action) {
+      state.counter -= action.value;
+    },
+    toggleCounter(state) {
+      state.showCounter = !state.showCounter;
+    },
+  },
+});
 
 const counterReducer = (state = initialState, action) => {
   if (action.type === 'INC') {
@@ -25,11 +48,11 @@ const counterReducer = (state = initialState, action) => {
     };
   }
 
-  if(action.type ==='TOGGLE'){
+  if (action.type === 'TOGGLE') {
     return {
       counter: state.counter,
-      showCounter: !state.showCounter
-    }
+      showCounter: !state.showCounter,
+    };
   }
 
   return state;
