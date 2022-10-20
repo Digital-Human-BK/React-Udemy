@@ -15,11 +15,9 @@ function App() {
   const cart = useSelector((state) => state.cart);
   const showCart = useSelector((state) => state.ui.isVisible);
   const notification = useSelector((state) => state.ui.notification);
-
+  console.log(cart);
   useEffect(() => {
-    if (cart.changed) {
-      dispatch(fetchCartData());
-    }
+    dispatch(fetchCartData());
   }, [dispatch]);
 
   useEffect(() => {
