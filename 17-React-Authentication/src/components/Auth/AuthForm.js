@@ -56,7 +56,10 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
-        login(data.idToken);
+        const expirationTime = new Date(
+          new Date().getTime() + +data.expiresIn * 1000
+        );
+        login(data.idToken, expirationTime.toISOString());
         navigate('/')
         console.log(data);
       })
