@@ -1,4 +1,5 @@
 import { useState, useRef, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthCtx } from '../../store/auth-ctx';
 
 import classes from './AuthForm.module.css';
@@ -6,6 +7,8 @@ import classes from './AuthForm.module.css';
 const AuthForm = () => {
   const emailRef = useRef();
   const passRef = useRef();
+  const navigate = useNavigate();
+
   const { login } = useContext(AuthCtx);
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,6 +57,7 @@ const AuthForm = () => {
       })
       .then((data) => {
         login(data.idToken);
+        navigate('/')
         console.log(data);
       })
       .catch((err) => {

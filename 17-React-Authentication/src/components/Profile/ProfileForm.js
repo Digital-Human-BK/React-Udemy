@@ -1,9 +1,11 @@
 import { useContext, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthCtx } from '../../store/auth-ctx';
 import classes from './ProfileForm.module.css';
 
 const ProfileForm = () => {
   const newPassRef = useRef();
+  const navigate = useNavigate();
   const { token } = useContext(AuthCtx);
 
   const submitHandler = (ev) => {
@@ -24,7 +26,19 @@ const ProfileForm = () => {
           'Content-Type': 'application/json',
         },
       }
-    ).then();
+    )
+      .then((res) => {
+        if (res.ok === false) {
+          throw new Error('Something went wrong');
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        navigate('/', { replace: true });
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   };
   return (
     <form className={classes.form} onSubmit={submitHandler}>
