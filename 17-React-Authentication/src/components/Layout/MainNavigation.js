@@ -1,12 +1,17 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthCtx } from '../../store/auth-ctx';
 
 import classes from './MainNavigation.module.css';
 
 const MainNavigation = () => {
-  const {isLoggedIn} = useContext(AuthCtx);
+  const navigate = useNavigate()
+  const {isLoggedIn, logout} = useContext(AuthCtx);
 
+  const logoutHandler = () => {
+    logout();
+    navigate('/');
+  }
   return (
     <header className={classes.header}>
       <Link to='/'>
@@ -21,7 +26,7 @@ const MainNavigation = () => {
             <Link to='/profile'>Profile</Link>
           </li>}
           {isLoggedIn && <li>
-            <button>Logout</button>
+            <button onClick={logoutHandler}>Logout</button>
           </li>}
         </ul>
       </nav>
