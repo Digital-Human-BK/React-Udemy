@@ -13,11 +13,11 @@ const AuthCtxProvider = (props) => {
   const userIsLoggedIn = !!token;
 
   const loginHandler = (token) => {
-    setToken(token)
+    setToken(token);
   };
 
   const logoutHandler = () => {
-    setToken(null)
+    setToken(null);
   };
 
   const ctxValue = {
