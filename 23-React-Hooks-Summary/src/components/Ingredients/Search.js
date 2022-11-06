@@ -10,7 +10,7 @@ const Search = React.memo((props) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (query === inputRef.current.value) {
+      if (query === inputRef.current.value && query !== '') {
         const searchQuery =
           query.length === 0 ? '' : `?orderBy="title"&equalTo="${query}"`;
 
@@ -35,7 +35,6 @@ const Search = React.memo((props) => {
     }, 500);
 
     return () => clearTimeout(timer);
-    
   }, [query, onSearch, inputRef]);
   return (
     <section className='search'>
