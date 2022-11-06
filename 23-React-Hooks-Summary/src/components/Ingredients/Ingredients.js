@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer } from 'react';
+import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import ErrorModal from '../UI/ErrorModal';
 
 import IngredientForm from './IngredientForm';
@@ -65,15 +65,15 @@ function Ingredients() {
       });
   }, []);
 
-  useEffect(() => {
-    console.log('Rendering component', ingredients);
-  }, [ingredients]);
+  // useEffect(() => {
+  //   console.log('Rendering component', ingredients);
+  // }, [ingredients]);
 
   const filteredIngredientsHandler = useCallback((filteredIngredients) => {
     dispatch({ type: 'SET', ingredients: filteredIngredients });
   }, []);
 
-  const addIngredientHandler = (newIngredient) => {
+  const addIngredientHandler = useCallback((newIngredient) => {
     // setIsLoading(true);
     dispatchHttp({ type: 'SEND' });
     fetch(
@@ -109,9 +109,9 @@ function Ingredients() {
         // setError(err.message);
         // setIsLoading(false);
       });
-  };
+  }, []);
 
-  const removeIngredientHandler = (id) => {
+  const removeIngredientHandler = useCallback((id) => {
     // setIsLoading(true);
     dispatchHttp({ type: 'SEND' });
     fetch(
@@ -131,12 +131,21 @@ function Ingredients() {
       .catch((err) => {
         dispatchHttp({ type: 'ERROR', errorMessage: err.message });
       });
-  };
+  }, []);
 
-  const clearError = () => {
+  const clearError = useCallback(() => {
     // setError(null);
     dispatchHttp({ type: 'CLEAR' });
-  };
+  }, []);
+
+  const ingredientList = useMemo(() => {
+    return (
+      <IngredientList
+        ingredients={ingredients}
+        onRemoveItem={removeIngredientHandler}
+      />
+    );
+  }, [ingredients, removeIngredientHandler]);
 
   return (
     <div className='App'>
@@ -151,10 +160,7 @@ function Ingredients() {
 
       <section>
         <Search onSearch={filteredIngredientsHandler} />
-        <IngredientList
-          ingredients={ingredients}
-          onRemoveItem={removeIngredientHandler}
-        />
+        {ingredientList}
       </section>
     </div>
   );
