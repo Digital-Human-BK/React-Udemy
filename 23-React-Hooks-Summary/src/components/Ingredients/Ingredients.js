@@ -84,7 +84,7 @@ function Ingredients() {
   const removeIngredientHandler = useCallback(
     (id) => {
       sendRequest(
-        `https://react-hooks-59fe0-default-rtdb.europe-west1.firebasedatabase.app/ingredients/${id}.json`,
+        `https://react-hooks-59fe0-default-rtdb.europe-west1.firebasedatabase.app/ingredients/${id}.jso`,
         'DELETE',
         null,
         id,
